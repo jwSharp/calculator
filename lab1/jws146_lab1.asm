@@ -102,5 +102,10 @@ main:
 		add a0, t0, t1
 		li v0, 1
 		syscall
+	
+	exiting:
+		# exit the program (without dropping off bottom)
+		li v0, 10
+		syscall
 		
 		
