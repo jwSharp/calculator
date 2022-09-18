@@ -19,6 +19,20 @@ main:
 		move t0, t3
 		move t3, zero
 		
-		li zero, 10 # zero register cannot be changed
+		# zero register cannot be changed
+		li zero, 10
 
+	# print(123)
+	li a0, 123
+	li v0, 1
+	syscall
 	
+	# print(\n)
+	li a0, '\n'
+	li v0, 11
+	syscall
+	
+	# print(456)
+	li a0, 456
+	li v0, 1
+	syscall
