@@ -70,17 +70,40 @@ _loop:
 	print_str "Choose an operation (=, +, -, *, /, c, q:"
 	print_special '\t'
 	
-	# v0 = input( character )
+	# operation = input( character )
 	li v0, 12
 	syscall
+	
+	sw v0, operation
+	
+	
 	print_special '\n'
 	
+	
+	# switch(v0):
+		# case q:
+		
+		# case c:
+	
+		# case =:
+		
+		# case +:
+		
+		# case -:
+		
+		# case *:
+		
+		# case /:
+		
+		# default
+		
+		
 	
 	
 	# }
 	j _loop
 	
 	
-	# end program
+	_exit_program:
 	li v0, 10
 	syscall
