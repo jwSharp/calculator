@@ -73,32 +73,60 @@ _loop:
 	# operation = input( character )
 	li v0, 12
 	syscall
-	
 	sw v0, operation
-	
 	
 	print_special '\n'
 	
+	# switch(operation):
+	lw t0, operation
+	beq t0, 'q', _case_quit
+	beq t0, 'c', _case_clear
+	beq t0, '=', _case_equal
+	beq t0, '+', _case_plus
+	beq t0, '-', _case_minus
+	beq t0, '*', _case_multiply
+	beq t0, '/', _case_divide
+	j _default
+		_case_quit:
+			# quits the program
+			j _exit_program
+		
+		_case_clear:
+			# clears the output
+			
+			j _exit_switch
 	
-	# switch(v0):
-		# case q:
+		_case_equal:
+			#
+			
+			j _exit_switch
 		
-		# case c:
+		_case_plus:
+			#
+			
+			j _exit_switch
+			
+		_case_minus:
+			#
+			
+			j _exit_switch
+			
+		_case_multiply:
+			# 
+			
+			j _exit_switch
+			
+		_case_divide:
+			# 
+			
+			j _exit_switch
+			
+		_default:
+			#
+			
+			j _exit_switch
 	
-		# case =:
-		
-		# case +:
-		
-		# case -:
-		
-		# case *:
-		
-		# case /:
-		
-		# default
-		
-		
-	
+	_exit_switch:
 	
 	# }
 	j _loop
