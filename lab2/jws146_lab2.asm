@@ -15,6 +15,16 @@
 	pop a0
 .end_macro
 
+.data
+	display: .word 0
+	operation: .word 0
+.text
+
 .globl main
 main:
 	
+	
+	
+	# end program
+	li v0, 10
+	syscall
