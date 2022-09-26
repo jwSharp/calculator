@@ -27,50 +27,17 @@
 	syscall
 .end_macro
 
-.macro print_special %str
-# prints a special character... does not properly compare strings
-	.data
-	character: %str
-	newline: .asciiz "newline"
-	tab: .asciiz "tab"
-	.text
+.macro print_special %character
+	# prints a special character
 	push a0
-	push a1
 	push v0
 	
-	# switch(character):
-	_switch_character:
-		la a0, character
-		
-		# if(character == "newline"):
-		la a1, newline
-		beq a0, a1, _case_newline
-		
-		# elif(character == "tab"):
-		la a1, newline
-		beq a0, a1, _case_tab
-		
-		# else: # invalid character
-		j _default
-		
-		_case_newline:
-			li a0, '\n'
-			li v0, 11
-			syscall
-			j _break
-			
-		_case_tab:
-			li a0, '\t'
-			li v0, 11
-			syscall
-			j _break
-		
-		_default:
-			print_str "Invalid character"
-		_break:
+	# breaks with invalid character
+	li a0, %character
+	li v0, 11
+	syscall
 	
 	pop a0
-	pop a1
 	pop v0
 .end_macro
 
@@ -93,21 +60,20 @@ main:
 _loop:
 	# print("display = ", display, "\n")
 	print_str "display = "
-	
 	lw a0, display
 	li v0, 1
 	syscall
-	
-	print_newline
+	print_special '\n'
 	
 	# print("\nChoose an operation (=,+,-,*,/,c,q):\t")
-	print_newline
-	
+	print_special '\n'
 	print_str "Choose an operation (=, +, -, *, /, c, q:"
+	print_special '\t'
 	
-	print_tab
-	
-	
+	# v0 = input( character )
+	li v0, 12
+	syscall
+	print_special '\n'
 	
 	
 	
