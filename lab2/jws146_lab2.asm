@@ -55,7 +55,7 @@ _loop:
 	
 	# print("\nChoose an operation (=,+,-,*,/,c,q):\t")
 	print_special '\n'
-	print_str "Choose an operation (=, +, -, *, /, c, q:"
+	print_str "Choose an operation (=, +, -, *, /, %, c, q:"
 	print_special '\t'
 	
 	# operation = input( character )
@@ -73,6 +73,7 @@ _loop:
 	beq t0, '+', _case_plus
 	beq t0, '-', _case_minus
 	beq t0, '*', _case_multiply
+	beq t0, '%', _case_remainder
 	beq t0, '/', _case_divide
 	j _default
 		_case_quit:
@@ -126,6 +127,7 @@ _loop:
 			print_str "What value would you like to subtract:"
 			print_special '\t'
 			
+			# display -= input( int )
 			li v0, 5
 			syscall
 			lw t0, display
@@ -139,6 +141,7 @@ _loop:
 			print_str "What value would you like to multiply:"
 			print_special '\t'
 			
+			# display *= input( int )
 			li v0, 5
 			syscall
 			lw t0, display
@@ -152,12 +155,34 @@ _loop:
 			print_str "What value would you like to floor divide by:"
 			print_special '\t'
 			
+			# display //= input( int )
 			li v0, 5
 			syscall
 			lw t0, display
 			div t0, t0, v0
 			sw t0, display
 			
+			j _exit_switch
+			
+		_case_remainder:
+			print_str "What value would you like to divide by:"
+			print_special '\t'
+			
+			# display %= input( int )
+				# t1 = display // input( int )
+				li v0, 5
+				syscall
+				lw t0, display
+				div t1, t0, v0
+				
+				# t2 = ( t1 ) * input( int )
+				mul t2, t1, v0
+				
+				#  t3 = display - ( t2 )
+				sub t3, t0, t2
+				
+				sw t3, display
+				
 			j _exit_switch
 			
 		_default:
