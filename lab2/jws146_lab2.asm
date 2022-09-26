@@ -15,8 +15,20 @@
 	pop a0
 .end_macro
 
+.macro print_newline
+	li a0, '\n'
+	li v0, 11
+	syscall
+.end_macro
+
+.macro print_tab
+	li a0, '\t'
+	li v0, 11
+	syscall
+.end_macro
+
 .macro print_special %str
-# prints a special character
+# prints a special character... does not properly compare strings
 	.data
 	character: %str
 	newline: .asciiz "newline"
@@ -72,19 +84,35 @@ main:
 	# print( "Hello. Welcome!" )
 	print_str "Hello. Welcome!"
 	
+	# print('\n')
+	li a0, '\n'
+	li v0, 11
+	syscall
+	
 	# while(True) {
 _loop:
-	# print(display)
+	# print("display = ", display, "\n")
+	print_str "display = "
+	
 	lw a0, display
 	li v0, 1
 	syscall
 	
-	# print("Operation (=,+,-,*,/,c,q):")
-	print_str "Operation (=, +, -, *, /, c, q:"
+	print_newline
+	
+	# print("\nChoose an operation (=,+,-,*,/,c,q):\t")
+	print_newline
+	
+	print_str "Choose an operation (=, +, -, *, /, c, q:"
+	
+	print_tab
+	
+	
+	
 	
 	
 	# }
-	#j _loop
+	j _loop
 	
 	
 	# end program
