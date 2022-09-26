@@ -15,18 +15,6 @@
 	pop a0
 .end_macro
 
-.macro print_newline
-	li a0, '\n'
-	li v0, 11
-	syscall
-.end_macro
-
-.macro print_tab
-	li a0, '\t'
-	li v0, 11
-	syscall
-.end_macro
-
 .macro print_special %character
 	# prints a special character
 	push a0
@@ -89,46 +77,96 @@ _loop:
 	j _default
 		_case_quit:
 			# quits the program
+			
+			print_str "Exiting program."
+			print_special '\n'
 			j _exit_program
 		
 		_case_clear:
-			# clears the output
+			# resets the display value to 0
 			
+			print_str "Clearing..."
+			
+			# display = 0
+			li t0, 0
+			sw t0, display
+			
+			print_str "Cleared."
 			j _exit_switch
 	
 		_case_equal:
-			#
+			# sets the display value
+			
+			print_str "What value would you like to set to:"
+			print_special '\t'
+			
+			# display = input( int )
+			li v0, 5
+			syscall
+			sw v0, display
 			
 			j _exit_switch
 		
 		_case_plus:
-			#
+			# adds to the display value
+			print_str "What value would you like to add:"
+			print_special '\t'
+			
+			# display += input( int )
+			li v0, 5
+			syscall
+			lw t0, display
+			add t0, t0, v0
+			sw t0, display
 			
 			j _exit_switch
 			
 		_case_minus:
-			#
+			# subtracts from the display value
+			print_str "What value would you like to subtract:"
+			print_special '\t'
+			
+			li v0, 5
+			syscall
+			lw t0, display
+			sub t0, t0, v0
+			sw t0, display
 			
 			j _exit_switch
 			
 		_case_multiply:
-			# 
+			# multiplies with the display value
+			print_str "What value would you like to multiply:"
+			print_special '\t'
+			
+			li v0, 5
+			syscall
+			lw t0, display
+			mul t0, t0, v0
+			sw t0, display
 			
 			j _exit_switch
 			
 		_case_divide:
-			# 
+			# floor divides the display value by another value
+			print_str "What value would you like to floor divide by:"
+			print_special '\t'
+			
+			li v0, 5
+			syscall
+			lw t0, display
+			div t0, t0, v0
+			sw t0, display
 			
 			j _exit_switch
 			
 		_default:
-			#
-			
-			j _exit_switch
+			# Invalid character
+			print_str "Invalid character."
+			print_special '\n'
 	
 	_exit_switch:
 	
-	# }
 	j _loop
 	
 	
