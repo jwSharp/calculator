@@ -35,3 +35,11 @@
 	arr: .word 100, 200, 300, 400, 500
 	message: "Testing!"
 .text
+
+
+.global main
+main:
+	
+	
+	li v0, 10
+	syscall
