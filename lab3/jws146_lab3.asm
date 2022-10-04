@@ -28,5 +28,10 @@
 	pop v0
 .end_macro
 
-main:
-	
+
+# create an array of 5 elements of size int
+.eqv ARR_LEN 5
+.data
+	arr: .word 100, 200, 300, 400, 500
+	message: "Testing!"
+.text
