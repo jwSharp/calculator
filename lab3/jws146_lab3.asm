@@ -33,13 +33,41 @@
 .eqv ARR_LEN 5
 .data
 	arr: .word 100, 200, 300, 400, 500
-	message: "Testing!"
+	message: .asciiz "Testing!"
 .text
 
 
 .global main
 main:
+	jal input_array
+	
+	jal print_array
+	
+	jal print_message
+	
+	jal exit
+	
+input_array:
+	push ra
 	
 	
+	pop ra
+	jr ra
+	
+print_array:
+	push ra
+	
+	
+	pop ra
+	jr ra
+	
+print_message:
+	push ra
+	
+	
+	pop ra
+	jr ra
+
+exit:
 	li v0, 10
 	syscall
