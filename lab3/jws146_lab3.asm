@@ -50,13 +50,28 @@ main:
 input_array:
 	push ra
 	
+	# for(t0 = 0; t0 < ARR_LEN; t0++)
+	li t0, 0
+	_loop:
+		# t0 < ARR_LEN
+		beq t0, ARR_LEN, _end_loop
+		bgt t0, ARR_LEN, _end_loop
+		
+		
+		
+		add t0, t0, 1 # t0++
+		j _loop
+		
+		
+	_end_loop:
+	
 	
 	pop ra
 	jr ra
 	
 print_array:
 	push ra
-	
+		
 	
 	pop ra
 	jr ra
