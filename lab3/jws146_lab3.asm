@@ -16,11 +16,11 @@
 	pop v0
 .end_macro
 
-.macro print_special %char
+.macro print_special %character
 	push a0
 	push v0
 	
-	li a0, character
+	li a0, %character
 	li v0, 11
 	syscall
 	
@@ -31,6 +31,7 @@
 
 # create an array of 5 elements of size int
 .eqv ARR_LEN 5
+.eqv SIZE 4
 .data
 	arr: .word 100, 200, 300, 400, 500
 	message: .asciiz "Testing!"
@@ -50,21 +51,28 @@ main:
 input_array:
 	push ra
 	
-	# for(t0 = 0; t0 < ARR_LEN; t0++)
+	# for(int i = 0; i < ARR_LENGTH; i++)
 	li t0, 0
 	_loop:
 		# t0 < ARR_LEN
 		beq t0, ARR_LEN, _end_loop
-		bgt t0, ARR_LEN, _end_loop
+		bgt t0, ARR_LEN, _end_loop # unnecessary?
 		
+		# print("Enter a value:\t")
+		print_str "Enter a value:"
+		print_special '\t'
 		
+		# arr[i] = input( int )
+		li v0, 5
+		syscall
+		mul t1, t0, SIZE
+		sw a0, arr(t1)
+		
+		print_special '\n'
 		
 		add t0, t0, 1 # t0++
 		j _loop
-		
-		
 	_end_loop:
-	
 	
 	pop ra
 	jr ra
